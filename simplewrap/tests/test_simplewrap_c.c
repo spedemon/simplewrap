@@ -1,5 +1,5 @@
 
-// wrapid - Simpler wrapper of C libraries based on Ctypes 
+// SimpleWrap - Simpler wrapper of C libraries based on Ctypes 
 // Stefano Pedemonte
 // Aalto University, School of Science, Helsinki
 // Oct 2013, Helsinki 

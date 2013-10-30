@@ -1,53 +1,16 @@
 
-# wrapid - Simple wrapper for C libraries based on ctypes 
+# SimpleWrap - Simple wrapper for C libraries based on ctypes 
 # Stefano Pedemonte 
 # Aalto University, School of Science, Helsinki 
 # Oct 2013, Helsinki 
 
-__all__ = ['load_c_library','call_c_function']
+__all__ = ['load_c_library','call_c_function','localpath']
 from ctypes import *
 from numpy import *
-import os 
+import os, sys, inspect
+from exceptions import *
+from c_python import load_c_library, localpath
 
-class InstallationError(Exception):
-    def __init__(self, value):
-        self.value = repr(value)
-    def __str__(self):
-        return "Installation Error: "+self.value
-
-class UnknownType(Exception):
-    def __init__(self, value):
-        self.value = repr(value)
-    def __str__(self):
-        return "Installation Error: "+self.value
-
-class DescriptorError(Exception):
-    def __init__(self, value):
-        self.value = repr(value)
-    def __str__(self):
-        return "Error in the descriptor of the C function parameters: "+self.value
-
-
-
-
-
-def load_c_library(lib_name,library_path): 
-    """Load the dynamic library with the given name (with path). """
-    library_found = False
-    for extension in ['so','dylib','dll']: 
-        filename = library_path+os.path.sep+lib_name + "." + extension
-        if os.path.exists(filename): 
-            library_found = True
-            break
-    if not library_found: 
-        raise InstallationError("The library %s could not be found in %s. Please specify the correct location of add location to the system path."%(lib_name,library_path)) 
-    else: 
-        try:
-            L = CDLL(filename)
-        except OSError: 
-            raise InstallationError("The library %s was found but could not be loaded. It is likely due to a linking error, missing libraries. "%lib_name) 
-        else: 
-            return L
 
 
 
@@ -118,7 +81,4 @@ def call_c_function(c_function, descriptor):
     setattr(result,'values',args) 
     setattr(result,'dictionary',dictionary) 
     return result 
-
-
-
 

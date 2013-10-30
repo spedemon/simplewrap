@@ -2,4 +2,5 @@
 *~
 dist/
 build/
-wrapid.egg-info/
+simplewrap.egg-info/
+*.so

@@ -1,6 +1,6 @@
-======
-wrapid
-======
+==========
+simplewrap
+==========
 
 Simple wrapper for C libraries based on Ctypes. 
 
@@ -8,7 +8,7 @@ Simple wrapper for C libraries based on Ctypes.
 Installation
 ============
 
-pip install wrapid
+pip install simplewrap
 
 
 
