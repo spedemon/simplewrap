@@ -39,6 +39,16 @@ def call_c_function(c_function, descriptor):
                 arg = 0
             arg = c_int(arg)
             arg_c = pointer(arg)
+        elif argtype == 'uint': 
+            if arg == None: 
+                arg = 0
+            arg = c_uint32(arg)
+            arg_c = pointer(arg)				
+        elif argtype == 'long': 
+            if arg == None: 
+                arg = 0
+            arg = c_longlong(arg)
+            arg_c = pointer(arg)
         elif argtype == 'float': 
             if arg == None: 
                 arg = 0.0
@@ -65,7 +75,7 @@ def call_c_function(c_function, descriptor):
     # cast back to Python types 
     for i in range(len(descriptor)): 
         argtype = descriptor[i]['type']
-        if argtype in ['int','float']: 
+        if argtype in ['int','uint','float','long']: 
             args[i] = args[i].value
     # Assemble wrapper object
     class CallResult(): 

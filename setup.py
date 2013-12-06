@@ -5,10 +5,11 @@
 # Oct 2013, Helsinki 
 
 
-from setuptools import setup, Extension
+from setuptools import setup, Extension, Library
 from glob import glob 
 
-test_simplewrap_module = Extension('simplewrap.tests.test_simplewrap_c', ['simplewrap/tests/test_simplewrap_c.c']) 
+test_simplewrap_module = Library('simplewrap.tests.test_simplewrap_c', ['simplewrap/tests/test_simplewrap_c.c']) 
+test_matrices_module   = Library('simplewrap.tests.test_matrices_c', ['simplewrap/tests/test_matrices_c.c']) 
 
 setup(
     name='simplewrap',
@@ -16,7 +17,7 @@ setup(
     author='Stefano Pedemonte',
     author_email='stefano.pedemonte@gmail.com',
     packages=['simplewrap', 'simplewrap.examples', 'simplewrap.tests'], 
-    ext_modules=[test_simplewrap_module, ],
+    ext_modules=[test_simplewrap_module, test_matrices_module],
     test_suite = "simplewrap.tests", 
     url='http://niftyrec.scienceontheweb.com/',
     license='LICENSE.txt',

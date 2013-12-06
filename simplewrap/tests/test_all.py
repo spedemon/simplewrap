@@ -7,15 +7,18 @@
 __all__ = ['echo']
 
 from .. import c_python
+from .. import c_python2 
+
 import unittest
 import os
 import random
+import numpy
 
 class TestSimpleWrap(unittest.TestCase): 
     """Sequence of tests for SimpleWrap. """   
     def setUp(self):
         # Load library
-        self.lib = c_python.load_c_library("test_simplewrap_c",os.path.split(__file__)[0])
+        self.lib = c_python.load_c_library("test_simplewrap_c",c_python.localpath())
 
     def test_int(self):
         """Wrap a simple function with integer parameters. """
@@ -34,5 +37,12 @@ class TestSimpleWrap(unittest.TestCase):
         pass
 
 
+    def test_cpython2(self): 
+        lib = c_python2.wrap_c_library("test_matrices_c",c_python2.localpath()) 
+        m = lib.sum_matrices_f( numpy.ones((4,4,4)), numpy.ones((4,4,4)) )
+        self.assertTrue(m.sum() == 4*4*4*2) 
+
 if __name__ == '__main__':
     unittest.main()
+    
+
