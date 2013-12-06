@@ -4,7 +4,7 @@
 # Aalto University, School of Science, Helsinki 
 # Oct 2013, Helsinki 
 
-__all__ = ['load_c_library','call_c_function','localpath']
+__all__ = ['call_c_function']
 from ctypes import *
 from numpy import *
 import os, sys, inspect

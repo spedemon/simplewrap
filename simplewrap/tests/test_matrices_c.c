@@ -24,15 +24,16 @@ Sum two matrices - single precision
 */
 extern int sum_matrices_f(matrix *A, matrix *B, matrix *out) 
 {
+    int i,j; 
     int ndim = A->ndim;
     if (A->ndim != B->ndim || out->ndim)
         return INPUT_ERROR; 
     
-    for (int i=0; i<ndim; i++)
+    for (i=0; i<ndim; i++)
         if (A->dim[i] != B->dim[i] || B->dim[i] != out->dim[i])
             return INPUT_ERROR; 
-    for (int i=0; i<ndim ;i++)
-        for (int j=0; j<A->dim[i] ;j++)
+    for (i=0; i<ndim ;i++)
+        for (j=0; j<A->dim[i] ;j++)
             ((float*) out->data)[i] = ((float*) A->data)[i] + ((float*) B->data)[i]; 
     return SUCCESS; 
 }
@@ -52,15 +53,16 @@ Sum two matrices - double precision
 */
 extern int sum_matrices_d(matrix *A, matrix *B, matrix *out) 
 {
+    int i,j; 
     int ndim = A->ndim;
     if (A->ndim != B->ndim || out->ndim)
         return INPUT_ERROR; 
     
-    for (int i=0; i<ndim; i++)
+    for (i=0; i<ndim; i++)
         if (A->dim[i] != B->dim[i] || B->dim[i] != out->dim[i])
             return INPUT_ERROR; 
-    for (int i=0; i<ndim ;i++)
-        for (int j=0; j<A->dim[i] ;j++)
+    for (i=0; i<ndim ;i++)
+        for (j=0; j<A->dim[i] ;j++)
             ((double*) out->data)[i] = ((double*) A->data)[i] + ((double*) B->data)[i]; 
     return SUCCESS; 
 }

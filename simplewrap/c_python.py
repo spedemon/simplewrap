@@ -2,25 +2,38 @@
 # SimpleWrap - Simple wrapper for C libraries based on ctypes 
 # Stefano Pedemonte 
 # Aalto University, School of Science, Helsinki 
-# Oct 2013, Helsinki 
+# Oct. 2013, Helsinki 
+# Harvard University, Martinos Center for Biomedical Imaging 
+# Dec. 2013, Boston 
 
-__all__ = ['load_c_library','call_c_function','localpath']
+__all__ = ['load_c_library','call_c_function','localpath','filepath']
 from ctypes import *
 from numpy import *
 import os, sys, inspect
 from exceptions import *
+import platform 
 
-
+if platform.system()=='Linux':
+    extensions = ['so','SO']
+elif platform.system()=='Darwin':
+    extensions = ['dylib','DYLIB']
+elif platform.system()=='Windows':
+    extensions = ['dll','DLL']
+else: 
+    extensions = ['so','SO','dylib','DYLIB','dll','DLL'] 
 
 
 def load_c_library(lib_name,library_path): 
     """Load the dynamic library with the given name (with path). """
-    library_found = False
-    for extension in ['so','dylib','dll']: 
-        filename = library_path+os.path.sep+lib_name + "." + extension
-        if os.path.exists(filename): 
-            library_found = True
-            break
+    library_found = False 
+    for extension in extensions:
+        for prefix in ['','lib','lib_']:
+            filename = library_path+os.path.sep+prefix+lib_name+"."+extension
+            if os.path.exists(filename): 
+                library_found = True
+                break
+        if library_found: 
+            break 
     if not library_found: 
         raise InstallationError("The library %s could not be found in %s. Please specify the correct location of add location to the system path."%(lib_name,library_path)) 
     else: 
@@ -115,3 +128,8 @@ def call_c_function(c_function, descriptor):
 
 def localpath(): 
     return os.path.dirname(os.path.realpath(inspect.getfile(sys._getframe(1))))
+
+def filepath(fullfilename): 
+    return os.path.dirname(os.path.realpath(fullfilename)) 
+    
+

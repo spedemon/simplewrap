@@ -6,24 +6,40 @@
 # 2013
 
 
-__all__ = ['load_c_library','localpath','make_wrapper']
+__all__ = ['load_c_library','localpath','filepath','make_wrapper']
+
 from ctypes import *
 from numpy import *
 import os, sys, inspect
 from exceptions import *
 from json import loads 
+import platform
 
 MAX_STR_LEN = 16384
 
 
+if platform.system()=='Linux':
+    extensions = ['so','SO']
+elif platform.system()=='Darwin':
+    extensions = ['dylib','DYLIB']
+elif platform.system()=='Windows':
+    extensions = ['dll','DLL']
+else: 
+    extensions = ['so','SO','dylib','DYLIB','dll','DLL'] 
+
+
+
 def load_c_library(library_name,library_path): 
     """Load the dynamic library with the given name (with path). """
-    library_found = False
-    for extension in ['so','dylib','dll']: 
-        filename = library_path+os.path.sep+library_name + "." + extension
-        if os.path.exists(filename): 
-            library_found = True
-            break
+    library_found = False 
+    for extension in extensions:
+        for prefix in ['','lib','lib_']:
+            filename = library_path+os.path.sep+prefix+library_name+"."+extension
+            if os.path.exists(filename): 
+                library_found = True
+                break
+        if library_found: 
+            break 
     if not library_found: 
         raise InstallationError("The library %s could not be found in %s. Please specify the correct location or add location to the system path."%(library_name,library_path)) 
     else: 
@@ -182,3 +198,8 @@ def wrap_c_library(library_name,library_path):
 
 def localpath(): 
     return os.path.dirname(os.path.realpath(inspect.getfile(sys._getframe(1))))
+
+def filepath(fullfilename): 
+    return os.path.dirname(os.path.realpath(fullfilename)) 
+
+
