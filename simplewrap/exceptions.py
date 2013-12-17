@@ -1,4 +1,12 @@
 
+# SimpleWrap - Simple wrapper for C libraries based on ctypes 
+# Stefano Pedemonte 
+# Aalto University, School of Science, Helsinki 
+# Oct. 2013, Helsinki 
+# Harvard University, Martinos Center for Biomedical Imaging 
+# Dec. 2013, Boston 
+
+
 class InstallationError(Exception):
     def __init__(self, value):
         self.value = repr(value)

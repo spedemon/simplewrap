@@ -6,7 +6,7 @@
 # 2013
 
 
-__all__ = ['load_c_library','localpath','filepath','make_wrapper']
+__all__ = ['load_c_library','localpath','filepath','make_wrapper', 'int32', 'uint32', 'uint16', 'float32']
 
 from ctypes import *
 from numpy import *

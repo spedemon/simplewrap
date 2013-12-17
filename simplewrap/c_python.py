@@ -6,7 +6,7 @@
 # Harvard University, Martinos Center for Biomedical Imaging 
 # Dec. 2013, Boston 
 
-__all__ = ['load_c_library','call_c_function','localpath','filepath']
+__all__ = ['load_c_library','call_c_function','localpath','filepath','int32', 'uint32', 'uint16', 'float32']
 from ctypes import *
 from numpy import *
 import os, sys, inspect
