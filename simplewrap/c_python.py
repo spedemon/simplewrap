@@ -12,6 +12,7 @@ from numpy import *
 import os, sys, inspect
 from exceptions import *
 import platform 
+import copy
 
 if platform.system()=='Linux':
     extensions = ['so','SO']
@@ -109,6 +110,18 @@ def call_c_function(c_function, descriptor):
         argtype = descriptor[i]['type']
         if argtype in ['int','uint','float','long']: 
             args[i] = args[i].value
+        # swap axes of array if requested
+        if descriptor[i]['type'] == 'array': 
+            if descriptor[i].has_key('swapaxes'): 
+                # 1) reshape
+                shape = args[i].shape 
+                shape2 = list(shape)
+                shape = copy.copy(shape2)
+                shape[descriptor[i]['swapaxes'][0]] = shape2[descriptor[i]['swapaxes'][1]]
+                shape[descriptor[i]['swapaxes'][1]] = shape2[descriptor[i]['swapaxes'][0]]
+                args[i] = args[i].reshape(shape)
+                # 2) swap axes
+                args[i] = args[i].swapaxes(descriptor[i]['swapaxes'][0],descriptor[i]['swapaxes'][1]) 
     # Assemble wrapper object
     class CallResult(): 
         pass 
