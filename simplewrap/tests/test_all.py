@@ -14,11 +14,13 @@ import os
 import random
 import numpy
 
+
 class TestSimpleWrap(unittest.TestCase): 
     """Sequence of tests for SimpleWrap. """   
     def setUp(self):
         # Load library
-        self.lib = c_python.load_c_library("test_simplewrap_c",c_python.localpath())
+        (found,fullpath,path) = c_python.find_c_library("test_simplewrap_c",[c_python.localpath()])
+        self.lib = c_python.load_c_library(fullpath)
 
     def test_int(self):
         """Wrap a simple function with integer parameters. """
@@ -27,6 +29,19 @@ class TestSimpleWrap(unittest.TestCase):
                         {'name':'output', 'type':'int', 'value':None },  ]
         r = c_python.call_c_function( self.lib.echo, descriptor ) 
         self.assertTrue(r.output == number)
+
+    def test_callback(self):
+        """Wrap a simple function that calls a Python callback. """
+        global A
+        A = 0
+        B = random.randint(1,1e6)
+        def callback(value): 
+            global A
+            A=value 
+        descriptor = [ {'name':'function1', 'type':'function', 'value':callback, 'arg_types':['int']},
+                       {'name':'input',     'type':'int',      'value':B}  ] 
+        r = c_python.call_c_function( self.lib.callback_test, descriptor ) 
+        self.assertTrue(A == B)
 
     def test_numpy_array(self):
         """Wrap a simple function with numpy ndarray parameters. """

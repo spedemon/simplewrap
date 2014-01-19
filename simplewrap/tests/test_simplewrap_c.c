@@ -19,4 +19,15 @@ extern int echo(int *in, int *out)
 }
 
 
+/*
+Simple callback test: call the callback function given as first argument, passing ot it the integer value given as second argument 
+*/
+typedef int (*ptrFunc)(int); 
+
+extern int callback_test(ptrFunc callback, int *out)
+{
+    int return_value = callback(*out); 
+    return return_value;
+}
+
 
