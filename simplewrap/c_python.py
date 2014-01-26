@@ -167,7 +167,19 @@ def call_c_function(c_function, descriptor):
                     raise DescriptorError("'array' with 'value'='None' must have 'size' property. ") 
                 if not d.has_key('dtype'): 
                     raise DescriptorError("'array' with 'value'='None' must have 'dtype' property. ") 
-                arg = zeros(d['size'],dtype=d['dtype']) 
+                if d.has_key('order'): 
+                    order = d['order']
+                    if not order in ["C","A","F",None]: 
+                        raise DescriptorError("'order' property of type 'array' must be 'C' (C array order),'F' (Fortran array order), 'A' (any order, let numpy decide) or None (any order, let numpy decide) ") 
+                else: 
+                    order = None
+                arg = zeros(d['size'],dtype=d['dtype'],order=order) 
+            # If variable is given (not None) and dtype is specified, change the dtype of the given array if not consistent 
+            # This also converts lists and tuples to numpy arrays if the given variable is not a numpy array. 
+            else: 
+                if d.has_key('dtype'): 
+                    dtype = d['dtype']
+                    arg=dtype(arg)
             arg_c = arg.ctypes.data_as(POINTER(c_void_p)) 
         elif argtype == 'function':
             if arg == None: 
