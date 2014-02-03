@@ -179,7 +179,9 @@ def call_c_function(c_function, descriptor):
             else: 
                 if d.has_key('dtype'): 
                     dtype = d['dtype']
-                    arg=dtype(arg)
+                    arg=dtype(arg) 
+                if d.has_key('order'): 
+                    arg=asarray(arg,order=d['order'])
             arg_c = arg.ctypes.data_as(POINTER(c_void_p)) 
         elif argtype == 'function':
             if arg == None: 
