@@ -245,7 +245,8 @@ def call_c_function(c_function, descriptor):
 
 
 def localpath(): 
-    return os.path.dirname(os.path.realpath(inspect.getfile(sys._getframe(1))))
+    path = os.path.dirname(os.path.realpath(inspect.getfile(sys._getframe(1))))
+    return path
 
 def filepath(fullfilename): 
     return os.path.dirname(os.path.realpath(fullfilename)) 
