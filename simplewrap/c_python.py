@@ -6,7 +6,7 @@
 # Harvard University, Martinos Center for Biomedical Imaging 
 # Dec. 2013, Boston 
 
-__all__ = ['exists_c_library','find_c_library','load_c_library','call_c_function','export_dl_library_path','FOUND','NOT_FOUND','FOUND_NOT_LOADABLE','localpath','filepath','int32', 'uint32', 'uint16', 'float32']
+__all__ = ['exists_c_library','find_c_library','load_c_library','call_c_function','export_dl_library_path','LibraryNotFound','FOUND','NOT_FOUND','FOUND_NOT_LOADABLE','localpath','filepath','int32', 'uint32', 'uint16', 'float32']
 from ctypes import *
 from numpy import *
 import os, sys, inspect
@@ -136,33 +136,33 @@ def call_c_function(c_function, descriptor):
         argtype = d['type']
         arg = d['value']
         if argtype == 'string': 
-            if arg == None: 
+            if arg  is None: 
                 if not d.has_key('size'): 
                     raise DescriptorError("'string' with 'value'='None' must have 'size' property. ") 
                 arg = ' '*size
             arg_c = c_char_p(arg)
         elif argtype == 'int': 
-            if arg == None: 
+            if arg  is None: 
                 arg = 0
             arg = c_int32(arg)
             arg_c = pointer(arg)
         elif argtype == 'uint': 
-            if arg == None: 
+            if arg  is None: 
                 arg = 0
             arg = c_uint32(arg)
             arg_c = pointer(arg)			
         elif argtype == 'long': 
-            if arg == None: 
+            if arg  is None: 
                 arg = 0
             arg = c_longlong(arg)
             arg_c = pointer(arg)
         elif argtype == 'float': 
-            if arg == None: 
+            if arg  is None: 
                 arg = 0.0
             arg = c_float(arg)
             arg_c = pointer(arg)
         elif argtype == 'array':
-            if arg == None: 
+            if arg  is None: 
                 if not d.has_key('size'): 
                     raise DescriptorError("'array' with 'value'='None' must have 'size' property. ") 
                 if not d.has_key('dtype'): 
@@ -184,7 +184,7 @@ def call_c_function(c_function, descriptor):
                     arg=asarray(arg,order=d['order'])
             arg_c = arg.ctypes.data_as(POINTER(c_void_p)) 
         elif argtype == 'function':
-            if arg == None: 
+            if arg  is None: 
                 raise DescriptorError("For 'function' type, 'value' must be a function. ") 
             if not d.has_key('arg_types'): 
                 raise DescriptorError("For 'function' type, 'arg_types' must be specified. ")

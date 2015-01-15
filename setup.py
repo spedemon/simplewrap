@@ -5,11 +5,11 @@
 # Oct 2013, Helsinki 
 
 
-from setuptools import setup, Extension, Library
+from setuptools import setup, Extension
 from glob import glob 
 
-test_simplewrap_module = Library('simplewrap.tests.test_simplewrap_c', ['simplewrap/tests/test_simplewrap_c.c']) 
-test_matrices_module   = Library('simplewrap.tests.test_matrices_c', ['simplewrap/tests/test_matrices_c.c']) 
+test_simplewrap_module = Extension('simplewrap.tests.test_simplewrap_c', ['simplewrap/tests/test_simplewrap_c.c']) 
+test_matrices_module   = Extension('simplewrap.tests.test_matrices_c', ['simplewrap/tests/test_matrices_c.c']) 
 
 setup(
     name='simplewrap',
@@ -35,7 +35,6 @@ setup(
         "Topic :: Scientific/Engineering :: Mathematics",
     ],
     install_requires=[
-        "numpy >= 1.7.1", 
+        "numpy >= 1.6.0", 
     ], 
 )
-

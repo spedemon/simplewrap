@@ -29,33 +29,33 @@ def call_c_function(c_function, descriptor):
         argtype = d['type']
         arg = d['value']
         if argtype == 'string': 
-            if arg == None: 
+            if arg  is None: 
                 if not d.has_key('size'): 
                     raise DescriptorError("'string' with 'value'='None' must have 'size' property. ") 
                 arg = ' '*size
             arg_c = c_char_p(arg)
         elif argtype == 'int': 
-            if arg == None: 
+            if arg  is None: 
                 arg = 0
             arg = c_int(arg)
             arg_c = pointer(arg)
         elif argtype == 'uint': 
-            if arg == None: 
+            if arg  is None: 
                 arg = 0
             arg = c_uint32(arg)
             arg_c = pointer(arg)				
         elif argtype == 'long': 
-            if arg == None: 
+            if arg  is None: 
                 arg = 0
             arg = c_longlong(arg)
             arg_c = pointer(arg)
         elif argtype == 'float': 
-            if arg == None: 
+            if arg  is None: 
                 arg = 0.0
             arg = c_float(arg)
             arg_c = pointer(arg)
         elif argtype == 'array':
-            if arg == None: 
+            if arg  is None: 
                 if not d.has_key('size'): 
                     raise DescriptorError("'array' with 'value'='None' must have 'size' property. ") 
                 if not d.has_key('dtype'): 
