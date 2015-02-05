@@ -21,7 +21,7 @@ prefixes = ['','lib','lib_']
 if platform.system()=='Linux':
     extensions = ['so','SO']
 elif platform.system()=='Darwin':
-    extensions = ['dylib','DYLIB']
+    extensions = ['dylib','DYLIB','so','SO']
 elif platform.system()=='Windows':
     extensions = ['dll','DLL']
 else: 
@@ -72,6 +72,7 @@ FOUND_NOT_LOADABLE = 2
 def find_c_library(library_name,paths=['./']): 
     for path in paths: 
         (exists,fullpath) = exists_c_library(library_name,path)
+        #print path, exists, fullpath
         if exists: 
             if isloadable_c_library(fullpath): 
                 return FOUND,fullpath,path
