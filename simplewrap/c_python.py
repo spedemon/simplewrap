@@ -136,34 +136,33 @@ def call_c_function(c_function, descriptor):
             DescriptorError("variable name 'status' is reserved. ") 
         argtype = d['type']
         arg = d['value']
-        try: 
-          if argtype == 'string': 
+        if argtype == 'string': 
             if arg  is None: 
                 if not d.has_key('size'): 
                     raise DescriptorError("'string' with 'value'='None' must have 'size' property. ") 
                 arg = ' '*size
             arg_c = c_char_p(arg)
-          elif argtype == 'int': 
+        elif argtype == 'int': 
             if arg  is None: 
                 arg = 0
             arg = c_int32(arg)
             arg_c = pointer(arg)
-          elif argtype == 'uint': 
+        elif argtype == 'uint': 
             if arg  is None: 
                 arg = 0
             arg = c_uint32(arg)
             arg_c = pointer(arg)			
-          elif argtype == 'long': 
+        elif argtype == 'long': 
             if arg  is None: 
                 arg = 0
             arg = c_longlong(arg)
             arg_c = pointer(arg)
-          elif argtype == 'float': 
+        elif argtype == 'float': 
             if arg  is None: 
                 arg = 0.0
             arg = c_float(arg)
             arg_c = pointer(arg)
-          elif argtype == 'array':
+        elif argtype == 'array':
             if arg  is None: 
                 if not d.has_key('size'): 
                     raise DescriptorError("'array' with 'value'='None' must have 'size' property. ") 
@@ -185,7 +184,7 @@ def call_c_function(c_function, descriptor):
                 if d.has_key('order'): 
                     arg=asarray(arg,order=d['order'])
             arg_c = arg.ctypes.data_as(POINTER(c_void_p)) 
-          elif argtype == 'function':
+        elif argtype == 'function':
             if arg  is None: 
                 raise DescriptorError("For 'function' type, 'value' must be a function. ") 
             if not d.has_key('arg_types'): 
@@ -202,11 +201,8 @@ def call_c_function(c_function, descriptor):
                     arg_types.append(c_float)
             funcCB = CFUNCTYPE(None, *arg_types)
             arg_c = funcCB(arg)
-          else: 
-            raise UnknownType("Type %s is not supported (variable %s) "%(str(argtype),d['name'])) 
-        except: 
-          print d
-          raise 
+        else: 
+            raise UnknownType("Type %s is not supported. "%str(argtype)) 
         argtype_c = type(arg_c) 
         argtypes_c.append(argtype_c) 
         args_c.append(arg_c) 
