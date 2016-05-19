@@ -46,7 +46,7 @@ def exists_c_library(lib_name,library_path):
     for extension in extensions:
         for prefix in prefixes:
             fullpath = library_path+os.path.sep+prefix+lib_name+"."+extension
-            if os.path.exists(fullpath): 
+            if os.path.exists(str(fullpath)): 
                 library_found = True
                 break
         if library_found: 
@@ -83,7 +83,7 @@ def find_c_library(library_name,paths=['./']):
 
 def load_c_library(fullpath): 
     """Load the dynamic library with the given name (with path). """
-    if not os.path.exists(fullpath):  
+    if not os.path.exists(str(fullpath)):  
         raise InstallationError("The library %s could not be found. Please specify the correct location of add location to the system path."%fullpath) 
     else: 
         try:
