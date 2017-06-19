@@ -83,5 +83,12 @@ extern int swrap_list_functions(char *functions)
     return SUCCESS;
 }
 
+/*
+Dummy Function
+*/
+extern void inittest_matrices_c() {
+    return;
+}
+
 
 

@@ -30,4 +30,10 @@ extern int callback_test(ptrFunc callback, int *out)
     return return_value;
 }
 
+/*
+Dummy Function
+*/
+extern void inittest_simplewrap_c() {
+    return;
+}
 
