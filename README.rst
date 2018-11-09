@@ -8,11 +8,14 @@ Simple wrapper for C libraries based on Ctypes.
 Installation
 ============
 
-pip install simplewrap
+pip3 install simplewrap
 
 or download source files, uncompress, at the command line cd to the downloaded folder and run: 
 
-python setup.py build test install 
+python setup.pu build_ext --inplace
+python setup.py build install
+pytest
+
 
 
 
