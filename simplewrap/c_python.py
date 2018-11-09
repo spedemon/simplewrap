@@ -146,7 +146,7 @@ def call_c_function(c_function, descriptor):
         arg = d['value']
         if argtype == 'string': 
             if arg  is None: 
-                if not d.has_key('size'): 
+                if not 'size' in d: 
                     raise DescriptorError("'string' with 'value'='None' must have 'size' property. ") 
                 arg = ' '*size
             arg_c = c_char_p(arg)
@@ -172,11 +172,11 @@ def call_c_function(c_function, descriptor):
             arg_c = pointer(arg)
         elif argtype == 'array':
             if arg  is None: 
-                if not d.has_key('size'): 
+                if not 'size' in d: 
                     raise DescriptorError("'array' with 'value'='None' must have 'size' property. ") 
-                if not d.has_key('dtype'): 
+                if not 'dtype'in d: 
                     raise DescriptorError("'array' with 'value'='None' must have 'dtype' property. ") 
-                if d.has_key('order'): 
+                if 'order' in d: 
                     order = d['order']
                     if not order in ["C","A","F",None]: 
                         raise DescriptorError("'order' property of type 'array' must be 'C' (C array order),'F' (Fortran array order), 'A' (any order, let numpy decide) or None (any order, let numpy decide) ") 
@@ -186,16 +186,16 @@ def call_c_function(c_function, descriptor):
             # If variable is given (not None) and dtype is specified, change the dtype of the given array if not consistent 
             # This also converts lists and tuples to numpy arrays if the given variable is not a numpy array. 
             else: 
-                if d.has_key('dtype'): 
+                if 'dtype' in d: 
                     dtype = d['dtype']
                     arg=dtype(arg) 
-                if d.has_key('order'): 
+                if 'order' in d: 
                     arg=asarray(arg,order=d['order'])
             arg_c = arg.ctypes.data_as(POINTER(c_void_p)) 
         elif argtype == 'function':
             if arg  is None: 
                 raise DescriptorError("For 'function' type, 'value' must be a function. ") 
-            if not d.has_key('arg_types'): 
+            if not 'arg_types' in d: 
                 raise DescriptorError("For 'function' type, 'arg_types' must be specified. ")
             arg_types = []
             for t in d['arg_types']: 
@@ -226,7 +226,7 @@ def call_c_function(c_function, descriptor):
             args[i] = args[i].value
         # swap axes of array if requested
         if descriptor[i]['type'] == 'array': 
-            if descriptor[i].has_key('swapaxes'): 
+            if 'swapaxes' in descriptor[i]: 
                 # 1) reshape
                 shape = args[i].shape 
                 shape2 = list(shape)

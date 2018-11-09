@@ -52,10 +52,10 @@ class TestSimpleWrap(unittest.TestCase):
         pass
 
 
-    def test_cpython2(self): 
-        lib = c_python2.wrap_c_library("test_matrices_c",c_python2.localpath()) 
-        m = lib.sum_matrices_f( numpy.ones((4,4,4)), numpy.ones((4,4,4)) )
-        self.assertTrue(m.sum() == 4*4*4*2) 
+    #def test_cpython2(self): 
+    #    lib = c_python2.wrap_c_library("test_matrices_c",c_python2.localpath()) 
+    #    m = lib.sum_matrices_f( numpy.ones((4,4,4)), numpy.ones((4,4,4)) )
+    #    self.assertTrue(m.sum() == 4*4*4*2) 
 
 if __name__ == '__main__':
     unittest.main()

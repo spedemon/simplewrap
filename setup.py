@@ -19,7 +19,7 @@ test_matrices_module   = Extension('simplewrap.tests.test_matrices_c', ['simplew
 
 setup(
     name='simplewrap',
-    version='0.3.2',
+    version='0.3.3',
     author='Stefano Pedemonte',
     author_email='stefano.pedemonte@gmail.com',
     packages=['simplewrap', 'simplewrap.examples', 'simplewrap.tests'], 
