@@ -10,7 +10,7 @@ __all__ = ['exists_c_library','find_c_library','load_c_library','call_c_function
 from ctypes import *
 from numpy import *
 import os, sys, inspect
-from exceptions import *
+from .exceptions import *
 import platform 
 import copy
 
@@ -33,7 +33,7 @@ class LibraryNotFound(Exception):
     def __init__(self,msg):
         self.msg = msg
     def __str__(self):
-        return "Linrary not found: %s"%self.msg 
+        return "Library not found: %s"%self.msg 
         
 
 
@@ -69,15 +69,23 @@ FOUND              = 1
 FOUND_NOT_LOADABLE = 2
 
 
-def find_c_library(library_name,paths=['./']): 
+def find_c_library(library_name,paths=['./'], print_debug=False): 
     for path in paths: 
         (exists,fullpath) = exists_c_library(library_name,path)
-        #print path, exists, fullpath
+        if print_debug:
+            print("Searched:",path, exists, fullpath)
         if exists: 
             if isloadable_c_library(fullpath): 
                 return FOUND,fullpath,path
             else: 
                 return FOUND_NOT_LOADABLE,fullpath,path
+    # If no library found with common names, then pick the first file found the
+    # contains the library name and ends with known extensions
+    for path in paths: 
+        for fname in os.listdir(path):
+            for ext in extensions: 
+                if library_name in fname and fname.endswith(ext):
+                    return FOUND, path+os.sep+fname, path
     return NOT_FOUND,None,None
 
 

@@ -8,8 +8,8 @@ __all__ = ['call_c_function']
 from ctypes import *
 from numpy import *
 import os, sys, inspect
-from exceptions import *
-from c_python import load_c_library, localpath
+from .exceptions import *
+from .c_python import load_c_library, localpath
 
 
 

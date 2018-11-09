@@ -19,13 +19,13 @@ test_matrices_module   = Extension('simplewrap.tests.test_matrices_c', ['simplew
 
 setup(
     name='simplewrap',
-    version='0.3.1',
+    version='0.3.2',
     author='Stefano Pedemonte',
     author_email='stefano.pedemonte@gmail.com',
     packages=['simplewrap', 'simplewrap.examples', 'simplewrap.tests'], 
     ext_modules=[test_simplewrap_module, test_matrices_module],
     test_suite = "simplewrap.tests", 
-    url='http://www.occiput.io/',
+    url='http://occiput.scienceontheweb.net/',
     license='LICENSE.txt',
     description='Easy to use wrappers generator for C libraries based on ctypes.',
     long_description=open('README.rst').read(),

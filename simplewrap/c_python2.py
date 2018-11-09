@@ -11,7 +11,7 @@ __all__ = ['load_c_library','localpath','filepath','make_wrapper', 'int32', 'uin
 from ctypes import *
 from numpy import *
 import os, sys, inspect
-from exceptions import *
+from .exceptions import *
 from json import loads 
 import platform
 
